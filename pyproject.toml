@@ -14,3 +14,70 @@ dependencies = [
     "torch",
     "transformers",
 ]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1",
+    "pylint>=3.0",
+    "ruff>=0.9",
+]
+
+# ---------------------------------------------------------------------------
+# Ruff — linting + formatting (replaces flake8, isort, pyupgrade, pydocstyle)
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 79
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "D",   # pydocstyle (Google convention enforced below)
+    "UP",  # pyupgrade
+]
+ignore = [
+    "D100",  # Missing docstring in public module
+    "D104",  # Missing docstring in public package
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+force-single-line = false
+known-first-party = ["looker"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# ---------------------------------------------------------------------------
+# Pyright — static type checking
+# ---------------------------------------------------------------------------
+[tool.pyright]
+include = ["src", "main.py"]
+pythonVersion = "3.14"
+typeCheckingMode = "standard"
+
+# ---------------------------------------------------------------------------
+# Pylint — additional lint rules + Google-style docstring validation
+# ---------------------------------------------------------------------------
+[tool.pylint.main]
+load-plugins = ["pylint.extensions.docparams"]
+
+[tool.pylint.format]
+max-line-length = 79
+
+[tool.pylint."messages control"]
+disable = [
+    "missing-module-docstring",
+    "missing-function-docstring",  # ruff/pydocstyle already handles this
+]
+
+[tool.pylint.parameter_documentation]
+accept-no-param-doc = false
+accept-no-raise-doc = false
+accept-no-return-doc = false
+default-docstring-type = "google"
