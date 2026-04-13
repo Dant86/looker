@@ -7,11 +7,11 @@ def jensen_shannon_divergence(
     p: torch.Tensor, q: torch.Tensor
 ) -> torch.Tensor:
     """Calculate the Jensen-Shannon Divergence of two distributions.
-    
+
     Args:
         p: A tensor of shape (n,).
         q: A tensor of shape (n,).
-        
+
     Returns:
         A tensor of shape (1,).
     """
