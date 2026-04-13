@@ -57,7 +57,7 @@ indent-style = "space"
 # Pyright — static type checking
 # ---------------------------------------------------------------------------
 [tool.pyright]
-include = ["src", "main.py"]
+include = ["src"]
 pythonVersion = "3.14"
 typeCheckingMode = "standard"
 
