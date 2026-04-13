@@ -1,0 +1,20 @@
+{
+  "google/gemma-3n-E4B": [
+    "google/gemma-3n-E4B",
+    "google/gemma-3n-E4B-it",
+    "google/gemma-3n-E2B-it",
+    "unsloth/gemma-3n-E4B-it-GGUF",
+    "google/gemma-3n-E2B-it",
+    "unsloth/gemma-3n-E2B-it-GGUF",
+    "onnx-community/gemma-3n-E2B-it-ONNX"
+  ],
+  "meta-llama/Llama-3.1-8B": [
+    "meta-llama/Llama-3.1-8B",
+    "meta-llama/Llama-3.1-8B-Instruct",
+    "Skywork/Skywork-Reward-V2-Llama-3.1-8B-40M",
+    "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+    "fdtn-ai/Foundation-Sec-8B",
+    "roadus/Foundation-Sec-8B-Q4_K_M-GGUF",
+    "roadus/Foundation-Sec-8B-Q8_0-GGUF"
+  ]
+}

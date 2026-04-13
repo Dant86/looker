@@ -3,5 +3,14 @@ name = "looker"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.9"
-dependencies = []
+requires-python = ">=3.14"
+dependencies = [
+    "datasets",
+    "ipywidgets",
+    "jupyterlab",
+    "jinja2",
+    "jupyter",
+    "plotly",
+    "torch",
+    "transformers",
+]
