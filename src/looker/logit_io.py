@@ -36,7 +36,7 @@ class LogitWriter:
         """
         logit_fname = self._base_dir / f"logits_{model}_{chunk_no}.pt"
 
-        with open(logit_fname, "wb") as logit_file:
+        with open(logit_fname, "wb", encoding="utf-8") as logit_file:
             torch.save(logits, logit_file)
 
     def write_prompts(
@@ -65,7 +65,7 @@ class LogitWriter:
             "chunks": self._get_total_chunks(),
         }
 
-        with open(manifest_path, "w") as manifest:
+        with open(manifest_path, "w", encoding="utf-8") as manifest:
             json.dump(metadata, manifest, indent=2)
 
     def clear(self: Self) -> None:
@@ -79,27 +79,22 @@ class LogitWriter:
             os.rmdir(self._base_dir)
 
     def _get_total_chunks(self: Self) -> int:
-        def _parse_chunk_from_logit_file(filename: pathlib.Path) -> int:
+        def _parse_chunk(filename: pathlib.Path) -> int:
             matches = re.search(r"logits_.+_(\d+)\.pt", str(filename))
             assert matches is not None  # Can never be None.
             return int(matches.group(1))
 
-        return max(
-            _parse_chunk_from_logit_file(filename) for filename in self._written_files
-        )
+        return max(_parse_chunk(filename) for filename in self._written_files)
 
     def _get_unique_models(self: Self) -> list[str]:
-        def _parse_model_name_from_logit_file(filename: pathlib.Path) -> str:
+        def _parse_model_name(filename: pathlib.Path) -> str:
             matches = re.search(r"logits_(.+)_\d+\.pt", str(filename))
             assert matches is not None  # Can never be None.
             return matches.group(1)
 
         # Sort so that output is deterministic.
         return sorted(
-            set(
-                _parse_model_name_from_logit_file(filename)
-                for filename in self._written_files
-            )
+            set(_parse_model_name(filename) for filename in self._written_files)
         )
 
 
@@ -109,16 +104,13 @@ def logit_writer(base_dir: pathlib.Path) -> Generator[LogitWriter, None, None]:
 
     Args:
         base_dir: Directory in which to write logits.
-
-    Returns:
-        A `LogitWriter` instance.
     """
     writer = LogitWriter(base_dir)
 
     try:
         yield writer
 
-    except:
+    except:  # pylint: disable=bare-except
         writer.clear()
 
     else:
@@ -134,7 +126,7 @@ def available_models(base_dir: pathlib.Path) -> list[str]:
     Returns:
         A list of all models whose logits were written in `base_dir`.
     """
-    with open(base_dir / "manifest.json") as manifest:
+    with open(base_dir / "manifest.json", encoding="utf-8") as manifest:
         metadata = json.load(manifest)
 
         return metadata["models"]
@@ -142,4 +134,18 @@ def available_models(base_dir: pathlib.Path) -> list[str]:
 
 def read_logits(
     base_dir: pathlib.Path, models: list[str], prompts: list[str] | None = None
-) -> dict[str, dict[str, torch.Tensor]]: ...
+) -> dict[str, dict[str, torch.Tensor]]:
+    """Read logits and prompts.
+
+    Args:
+        models: List of model names to retrieve prompts and their associated
+            outputs logits for.
+        prompts: If specified, a list of prompts to filter outputs to. Otherwise
+            all logits are returned. Defaults to `None`.
+
+    Returns:
+        A dictionary of `{prompt: {model_name: logits}}`.
+    """
+    del base_dir, models, prompts
+
+    return {}
