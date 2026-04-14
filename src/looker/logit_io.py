@@ -94,7 +94,9 @@ class LogitWriter:
 
         # Sort so that output is deterministic.
         return sorted(
-            set(_parse_model_name(filename) for filename in self._written_files)
+            set(
+                _parse_model_name(filename) for filename in self._written_files
+            )
         )
 
 
@@ -138,6 +140,7 @@ def read_logits(
     """Read logits and prompts.
 
     Args:
+        base_dir: Base directory in which logits were saved.
         models: List of model names to retrieve prompts and their associated
             outputs logits for.
         prompts: If specified, a list of prompts to filter outputs to. Otherwise
